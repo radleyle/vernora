@@ -4,5 +4,13 @@
   "workspaces": [
     "packages/*",
     "apps/*"
-  ]
+  ],
+  "scripts": {
+    "seed": "tsx infrastructure/scripts/seed-course.ts"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.20.0",
+    "pg": "^8.22.0",
+    "tsx": "^4.23.1"
+  }
 }
