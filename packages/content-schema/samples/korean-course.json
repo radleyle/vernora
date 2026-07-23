@@ -1,0 +1,219 @@
+{
+  "id": "korean-core",
+  "version": 1,
+  "language": "ko",
+  "explanationLanguages": ["en", "vi"],
+  "title": { "en": "Korean", "vi": "Tiếng Hàn" },
+  "concepts": [
+    {
+      "id": "greeting-people",
+      "name": { "en": "Greeting people", "vi": "Chào hỏi" },
+      "explanation": {
+        "en": "Koreans choose a greeting based on the relationship. 안녕하세요 (annyeonghaseyo) is the safe polite greeting for almost everyone. 안녕 (annyeong) is casual and only for close friends or children — using it with a stranger or elder is rude.",
+        "vi": "Người Hàn chọn cách chào dựa trên mối quan hệ. 안녕하세요 (annyeonghaseyo) là lời chào lịch sự an toàn với hầu hết mọi người. 안녕 (annyeong) là cách chào thân mật, chỉ dùng với bạn thân hoặc trẻ em."
+      },
+      "examples": [
+        {
+          "korean": "안녕하세요, 선생님!",
+          "meaning": { "en": "Hello, teacher! (polite)" }
+        },
+        {
+          "korean": "안녕!",
+          "meaning": { "en": "Hi! (casual, close friends only)" }
+        }
+      ]
+    },
+    {
+      "id": "introducing-yourself",
+      "name": { "en": "Introducing yourself" },
+      "explanation": {
+        "en": "To say \"I am ___\", use 저는 ___예요 (jeoneun ___-yeyo). 저는 means \"as for me\" and ___예요 means \"am/is\". Korean puts the verb at the end of the sentence."
+      },
+      "examples": [
+        {
+          "korean": "저는 민수예요.",
+          "meaning": { "en": "I am Minsu." }
+        }
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "id": "annyeonghaseyo",
+      "korean": "안녕하세요",
+      "romanization": "annyeonghaseyo",
+      "meaning": { "en": "hello (polite)", "vi": "xin chào (lịch sự)" },
+      "formality": "POLITE"
+    },
+    {
+      "id": "annyeong",
+      "korean": "안녕",
+      "romanization": "annyeong",
+      "meaning": { "en": "hi / bye (casual)", "vi": "chào (thân mật)" },
+      "formality": "CASUAL",
+      "notes": { "en": "Only with close friends or people younger than you." }
+    },
+    {
+      "id": "gamsahamnida",
+      "korean": "감사합니다",
+      "romanization": "gamsahamnida",
+      "meaning": { "en": "thank you (formal)", "vi": "cảm ơn (trang trọng)" },
+      "formality": "FORMAL"
+    },
+    {
+      "id": "ne",
+      "korean": "네",
+      "romanization": "ne",
+      "meaning": { "en": "yes", "vi": "vâng" },
+      "formality": "POLITE"
+    },
+    {
+      "id": "aniyo",
+      "korean": "아니요",
+      "romanization": "aniyo",
+      "meaning": { "en": "no", "vi": "không" },
+      "formality": "POLITE"
+    },
+    {
+      "id": "mannaseo-bangawoyo",
+      "korean": "만나서 반가워요",
+      "romanization": "mannaseo bangawoyo",
+      "meaning": { "en": "nice to meet you", "vi": "rất vui được gặp bạn" },
+      "formality": "POLITE"
+    }
+  ],
+  "levels": [
+    {
+      "id": "ko-a0",
+      "code": "A0",
+      "units": [
+        {
+          "id": "first-words",
+          "title": { "en": "First Words", "vi": "Những từ đầu tiên" },
+          "scenarios": [
+            {
+              "id": "meeting-someone-new",
+              "title": { "en": "Meeting Someone New" },
+              "objective": {
+                "en": "Greet a new person politely and introduce yourself."
+              },
+              "lessons": [
+                {
+                  "id": "greetings-and-introductions",
+                  "title": { "en": "Greetings and Introductions" },
+                  "objective": {
+                    "en": "Greet someone at the right politeness level and say your name."
+                  },
+                  "steps": [
+                    {
+                      "type": "SITUATION",
+                      "text": {
+                        "en": "It is your first day at a language exchange meetup in Seoul. Someone walks up to you with a smile."
+                      }
+                    },
+                    {
+                      "type": "VOCABULARY",
+                      "vocabularyIds": [
+                        "annyeonghaseyo",
+                        "annyeong",
+                        "gamsahamnida",
+                        "ne",
+                        "aniyo",
+                        "mannaseo-bangawoyo"
+                      ]
+                    },
+                    { "type": "CONCEPT", "conceptId": "greeting-people" },
+                    { "type": "EXERCISE", "exerciseId": "listen-hello" },
+                    { "type": "EXERCISE", "exerciseId": "match-basics" },
+                    { "type": "CONCEPT", "conceptId": "introducing-yourself" },
+                    { "type": "EXERCISE", "exerciseId": "arrange-introduction" },
+                    { "type": "EXERCISE", "exerciseId": "politeness-professor" },
+                    { "type": "EXERCISE", "exerciseId": "translate-thanks" },
+                    { "type": "EXERCISE", "exerciseId": "speak-hello" }
+                  ],
+                  "exercises": [
+                    {
+                      "id": "listen-hello",
+                      "type": "LISTEN_AND_SELECT",
+                      "conceptIds": ["greeting-people"],
+                      "instruction": { "en": "Listen and choose the meaning." },
+                      "audioText": "안녕하세요",
+                      "options": [
+                        { "meaning": { "en": "Hello" } },
+                        { "meaning": { "en": "Thank you" } },
+                        { "meaning": { "en": "Goodbye" } }
+                      ],
+                      "correctIndex": 0
+                    },
+                    {
+                      "id": "match-basics",
+                      "type": "MATCH_PAIRS",
+                      "conceptIds": ["greeting-people"],
+                      "instruction": {
+                        "en": "Match each Korean word to its meaning."
+                      },
+                      "pairs": [
+                        { "korean": "네", "meaning": { "en": "yes" } },
+                        { "korean": "아니요", "meaning": { "en": "no" } },
+                        {
+                          "korean": "감사합니다",
+                          "meaning": { "en": "thank you" }
+                        }
+                      ]
+                    },
+                    {
+                      "id": "arrange-introduction",
+                      "type": "ARRANGE_TOKENS",
+                      "conceptIds": ["introducing-yourself"],
+                      "instruction": {
+                        "en": "Arrange the words: \"Hello, I am Minsu.\""
+                      },
+                      "tokens": ["안녕하세요", "저는", "민수예요"],
+                      "distractors": [],
+                      "translation": { "en": "Hello, I am Minsu." }
+                    },
+                    {
+                      "id": "politeness-professor",
+                      "type": "POLITENESS_CHOICE",
+                      "conceptIds": ["greeting-people"],
+                      "instruction": { "en": "Choose the right greeting." },
+                      "situation": {
+                        "en": "You pass your professor in the hallway."
+                      },
+                      "options": [
+                        { "korean": "안녕", "formality": "CASUAL" },
+                        { "korean": "안녕하세요", "formality": "POLITE" }
+                      ],
+                      "correctIndex": 1,
+                      "explanation": {
+                        "en": "안녕 is only for close friends. With a professor, always use the polite 안녕하세요."
+                      }
+                    },
+                    {
+                      "id": "translate-thanks",
+                      "type": "TRANSLATE_TO_KOREAN",
+                      "conceptIds": ["greeting-people"],
+                      "instruction": { "en": "Type it in Korean." },
+                      "prompt": { "en": "Thank you" },
+                      "acceptedAnswers": ["감사합니다", "고마워요"]
+                    },
+                    {
+                      "id": "speak-hello",
+                      "type": "SPEAK",
+                      "conceptIds": ["greeting-people"],
+                      "instruction": {
+                        "en": "Say it out loud: greet someone politely."
+                      },
+                      "targetText": "안녕하세요",
+                      "translation": { "en": "Hello (polite)" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

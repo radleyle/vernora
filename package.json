@@ -1,0 +1,8 @@
+{
+  "name": "vernora",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ]
+}
