@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import {
   FlatList,
   Pressable,
@@ -13,6 +13,7 @@ import { useSession } from "../providers/session-provider";
 
 export default function HomeScreen() {
   const { session } = useSession();
+  const router = useRouter();
 
   const courses = useQuery({
     queryKey: ["courses"],
@@ -61,12 +62,15 @@ export default function HomeScreen() {
         data={courses.data ?? []}
         keyExtractor={(course) => course.id}
         renderItem={({ item }) => (
-          <View style={styles.courseCard}>
+          <Pressable
+            style={styles.courseCard}
+            onPress={() => router.push(`/course/${item.id}`)}
+          >
             <Text style={styles.courseTitle}>{item.title.en}</Text>
             <Text style={styles.muted}>
-              {item.language.toUpperCase()} · version {item.version}
+              {item.language.toUpperCase()} · version {item.version} · tap to start
             </Text>
-          </View>
+          </Pressable>
         )}
       />
     </View>
