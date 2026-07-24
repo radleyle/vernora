@@ -2,6 +2,12 @@ spring:
   application:
     name: vernora-api
 
+  config:
+    # Spring does not load .env files natively; this imports services/api/.env
+    # (KEY=VALUE, parsed as properties) when present. Optional so tests, CI,
+    # and deployed environments (which use real env vars) work without it.
+    import: "optional:file:.env[.properties]"
+
   datasource:
     # Environment variables override these local-dev defaults in deployment.
     url: ${DB_URL:jdbc:postgresql://localhost:5433/vernora}
@@ -16,6 +22,10 @@ spring:
           # caches them on first token validation (not at startup, so the
           # app boots fine without network access to Supabase).
           jwk-set-uri: ${SUPABASE_JWKS_URI:https://placeholder.supabase.co/auth/v1/.well-known/jwks.json}
+          # Spring defaults to RS256 only; Supabase signs with ES256.
+          jws-algorithms:
+            - ES256
+            - RS256
 
   jpa:
     hibernate:
@@ -24,6 +34,10 @@ spring:
       ddl-auto: validate
     # Keep JPA sessions scoped to the transaction, not the whole HTTP request.
     open-in-view: false
+
+app:
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:8081}
 
 management:
   endpoints:
