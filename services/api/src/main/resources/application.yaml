@@ -8,6 +8,15 @@ spring:
     username: ${DB_USER:vernora}
     password: ${DB_PASSWORD:vernora}
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # Supabase publishes its signing keys here; Spring fetches and
+          # caches them on first token validation (not at startup, so the
+          # app boots fine without network access to Supabase).
+          jwk-set-uri: ${SUPABASE_JWKS_URI:https://placeholder.supabase.co/auth/v1/.well-known/jwks.json}
+
   jpa:
     hibernate:
       # Flyway owns the schema. Hibernate only verifies that entities match
