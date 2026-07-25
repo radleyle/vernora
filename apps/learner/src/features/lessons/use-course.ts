@@ -14,9 +14,13 @@ type CourseDetailResponse = {
  * before any screen renders it. If the server ever serves a malformed
  * course, we fail here with a clear error instead of crashing mid-lesson.
  */
-export function useCourse(courseId: string) {
+export function useCourse(courseId: string | undefined) {
   return useQuery({
     queryKey: ["course", courseId],
+    // Hooks must be called unconditionally, so callers that don't know the
+    // course yet (e.g. the review screen before its queue loads) pass
+    // undefined and the fetch simply waits.
+    enabled: Boolean(courseId),
     queryFn: async () => {
       const response = await apiGet<CourseDetailResponse>(
         `/v1/courses/${courseId}`,

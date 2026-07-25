@@ -63,10 +63,13 @@ export function useSubmitAttempt() {
     // Retries are safe precisely because attemptId makes the write idempotent.
     retry: 2,
     onSuccess: (_data, attempt) => {
-      // Any cached progress for this course is now stale; refetch on next use.
+      // Any cached progress and review schedule is now stale; refetch on
+      // next use. (The review screen snapshots its queue at session start,
+      // so an invalidation mid-session never reshuffles it.)
       void queryClient.invalidateQueries({
         queryKey: ["progress", attempt.courseId],
       });
+      void queryClient.invalidateQueries({ queryKey: ["review-queue"] });
     },
   });
 }

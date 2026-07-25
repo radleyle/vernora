@@ -7,6 +7,7 @@ import {
   Text,
   View,
 } from "react-native";
+import { useReviewQueue } from "../features/lessons/use-review";
 import { apiGet, type CourseSummary, type Me } from "../lib/api";
 import { getSupabase } from "../lib/supabase";
 import { useSession } from "../providers/session-provider";
@@ -27,6 +28,10 @@ export default function HomeScreen() {
     queryFn: () => apiGet<Me>("/v1/me", session?.access_token),
     enabled: session !== null,
   });
+
+  // Only runs when signed in; guests have no attempt history to review.
+  const reviewQueue = useReviewQueue();
+  const dueCount = reviewQueue.data?.items.length ?? 0;
 
   return (
     <View style={styles.container}>
@@ -50,6 +55,22 @@ export default function HomeScreen() {
           </>
         )}
       </View>
+
+      {session !== null && (
+        <Pressable
+          style={[styles.reviewCard, dueCount === 0 && styles.reviewCardIdle]}
+          onPress={() => router.push("/review")}
+        >
+          <Text style={styles.reviewTitle}>
+            {dueCount > 0 ? `🧠 Review · ${dueCount} due` : "🧠 Review"}
+          </Text>
+          <Text style={styles.reviewSubtitle}>
+            {dueCount > 0
+              ? "Bring these back before you forget them"
+              : "Nothing due right now — all caught up"}
+          </Text>
+        </Pressable>
+      )}
 
       <Text style={styles.heading}>Courses</Text>
       {courses.isPending && <Text style={styles.muted}>Loading courses…</Text>}
@@ -88,6 +109,20 @@ const styles = StyleSheet.create({
   authText: { fontSize: 14, color: "#333" },
   link: { color: "#4f46e5", fontWeight: "600" },
   heading: { fontSize: 22, fontWeight: "700", marginBottom: 12 },
+  reviewCard: {
+    backgroundColor: "#4f46e5",
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 24,
+  },
+  reviewCardIdle: { backgroundColor: "#9ca3af" },
+  reviewTitle: {
+    color: "#ffffff",
+    fontSize: 17,
+    fontWeight: "700",
+    marginBottom: 4,
+  },
+  reviewSubtitle: { color: "#e0e7ff", fontSize: 13 },
   courseCard: {
     backgroundColor: "#ffffff",
     borderRadius: 12,
