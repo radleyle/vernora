@@ -1,9 +1,13 @@
 package com.vernora.api.progress.application;
 
+import com.vernora.api.progress.api.dto.CourseMasteryResponse;
+import com.vernora.api.progress.api.dto.CourseMasteryResponse.ConceptMasteryDto;
 import com.vernora.api.progress.api.dto.CourseProgressResponse;
 import com.vernora.api.progress.api.dto.CourseProgressResponse.ExerciseProgress;
 import com.vernora.api.progress.api.dto.CourseProgressResponse.LessonProgress;
 import com.vernora.api.progress.api.dto.RecordAttemptRequest;
+import com.vernora.api.progress.domain.MasteryCalculator;
+import com.vernora.api.progress.infrastructure.ConceptAttemptReader;
 import com.vernora.api.progress.infrastructure.ExerciseAttemptEntity;
 import com.vernora.api.progress.infrastructure.ExerciseAttemptRepository;
 import java.util.LinkedHashMap;
@@ -17,9 +21,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProgressService {
 
     private final ExerciseAttemptRepository attempts;
+    private final ConceptAttemptReader conceptAttempts;
 
-    public ProgressService(ExerciseAttemptRepository attempts) {
+    public ProgressService(
+            ExerciseAttemptRepository attempts, ConceptAttemptReader conceptAttempts) {
         this.attempts = attempts;
+        this.conceptAttempts = conceptAttempts;
     }
 
     /**
@@ -57,6 +64,7 @@ public class ProgressService {
                         request.lessonId(),
                         exerciseId,
                         request.exerciseType(),
+                        request.conceptIds().toArray(String[]::new),
                         request.correct(),
                         request.clientCreatedAt());
         try {
@@ -65,6 +73,22 @@ public class ProgressService {
         } catch (DataIntegrityViolationException raceLoser) {
             return false;
         }
+    }
+
+    @Transactional(readOnly = true)
+    public CourseMasteryResponse getCourseMastery(UUID userId, String courseId) {
+        var mastery = MasteryCalculator.calculate(conceptAttempts.readHistory(userId, courseId));
+        var concepts =
+                mastery.stream()
+                        .map(m ->
+                                new ConceptMasteryDto(
+                                        m.conceptId(),
+                                        m.attempts(),
+                                        m.recentAccuracy(),
+                                        m.masteryScore(),
+                                        m.lastAttemptAt()))
+                        .toList();
+        return new CourseMasteryResponse(courseId, concepts);
     }
 
     @Transactional(readOnly = true)

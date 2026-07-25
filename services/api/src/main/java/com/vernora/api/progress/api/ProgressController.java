@@ -1,5 +1,6 @@
 package com.vernora.api.progress.api;
 
+import com.vernora.api.progress.api.dto.CourseMasteryResponse;
 import com.vernora.api.progress.api.dto.CourseProgressResponse;
 import com.vernora.api.progress.application.ProgressService;
 import java.util.UUID;
@@ -24,5 +25,13 @@ public class ProgressController {
             @PathVariable String courseId, @AuthenticationPrincipal Jwt jwt) {
         var userId = UUID.fromString(jwt.getSubject());
         return progressService.getCourseProgress(userId, courseId);
+    }
+
+    /** Per-concept mastery, weakest first (spec §7.3). */
+    @GetMapping("/v1/courses/{courseId}/mastery")
+    public CourseMasteryResponse getCourseMastery(
+            @PathVariable String courseId, @AuthenticationPrincipal Jwt jwt) {
+        var userId = UUID.fromString(jwt.getSubject());
+        return progressService.getCourseMastery(userId, courseId);
     }
 }

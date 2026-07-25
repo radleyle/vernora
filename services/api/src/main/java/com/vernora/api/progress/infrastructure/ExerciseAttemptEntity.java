@@ -47,6 +47,14 @@ public class ExerciseAttemptEntity {
     @Column(nullable = false)
     private String exerciseType;
 
+    /**
+     * The concept tags of the exercise, denormalized onto the attempt so
+     * mastery can be derived from this table alone. Hibernate maps String[]
+     * to Postgres's native text[] column type.
+     */
+    @Column(nullable = false)
+    private String[] conceptIds;
+
     @Column(nullable = false)
     private boolean correct;
 
@@ -68,6 +76,7 @@ public class ExerciseAttemptEntity {
             String lessonId,
             String exerciseId,
             String exerciseType,
+            String[] conceptIds,
             boolean correct,
             Instant clientCreatedAt) {
         this.attemptId = attemptId;
@@ -76,6 +85,7 @@ public class ExerciseAttemptEntity {
         this.lessonId = lessonId;
         this.exerciseId = exerciseId;
         this.exerciseType = exerciseType;
+        this.conceptIds = conceptIds;
         this.correct = correct;
         this.clientCreatedAt = clientCreatedAt;
         this.createdAt = Instant.now();
@@ -107,6 +117,10 @@ public class ExerciseAttemptEntity {
 
     public String getExerciseType() {
         return exerciseType;
+    }
+
+    public String[] getConceptIds() {
+        return conceptIds;
     }
 
     public boolean isCorrect() {

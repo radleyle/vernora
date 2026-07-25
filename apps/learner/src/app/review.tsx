@@ -128,6 +128,7 @@ export default function ReviewScreen() {
                   attemptId: crypto.randomUUID(),
                   exerciseId: current.exerciseId,
                   exerciseType: exercise.type,
+                  conceptIds: exercise.conceptIds,
                   courseId: current.courseId,
                   lessonId: current.lessonId,
                   correct,

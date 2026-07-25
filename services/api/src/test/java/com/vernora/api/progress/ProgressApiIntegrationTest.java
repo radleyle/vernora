@@ -123,6 +123,33 @@ class ProgressApiIntegrationTest {
     }
 
     @Test
+    void masteryDerivesConceptScoresFromTaggedAttempts() throws Exception {
+        // One recognition success, one production failure, same concept.
+        mockMvc.perform(postAttempt("ex-greet-1", attemptJson(
+                        "11111111-0000-4000-8000-00000000000b", "LISTEN_AND_SELECT", true),
+                        asUser(USER)))
+                .andExpect(status().isCreated());
+        mockMvc.perform(postAttempt("ex-greet-2", attemptJson(
+                        "11111111-0000-4000-8000-00000000000c", "TRANSLATE_TO_KOREAN", false),
+                        asUser(USER)))
+                .andExpect(status().isCreated());
+
+        // Weighted accuracy 1/(1+2) = 0.333; confidence 2/5 = 0.4 -> score 13.
+        mockMvc.perform(get("/v1/courses/korean-core/mastery").with(asUser(USER)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.concepts.length()").value(1))
+                .andExpect(jsonPath("$.concepts[0].conceptId").value("greet-politely"))
+                .andExpect(jsonPath("$.concepts[0].attempts").value(2))
+                .andExpect(jsonPath("$.concepts[0].masteryScore").value(13));
+    }
+
+    @Test
+    void masteryRequiresAuthentication() throws Exception {
+        mockMvc.perform(get("/v1/courses/korean-core/mastery"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
     void attemptsRequireAuthentication() throws Exception {
         mockMvc.perform(post("/v1/exercises/ex-greet-1/attempts")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -157,15 +184,20 @@ class ProgressApiIntegrationTest {
     }
 
     private String attemptJson(String attemptId, boolean correct) {
+        return attemptJson(attemptId, "LISTEN_AND_SELECT", correct);
+    }
+
+    private String attemptJson(String attemptId, String exerciseType, boolean correct) {
         return """
                 {
                   "attemptId": "%s",
                   "courseId": "korean-core",
                   "lessonId": "lesson-greetings",
-                  "exerciseType": "listen_and_select",
+                  "exerciseType": "%s",
+                  "conceptIds": ["greet-politely"],
                   "correct": %s,
                   "clientCreatedAt": "2026-07-24T12:00:00Z"
                 }
-                """.formatted(attemptId, correct);
+                """.formatted(attemptId, exerciseType, correct);
     }
 }

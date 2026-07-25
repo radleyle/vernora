@@ -93,6 +93,7 @@ export default function LessonPlayerScreen() {
                 attemptId: crypto.randomUUID(),
                 exerciseId: exercise.id,
                 exerciseType: exercise.type,
+                conceptIds: exercise.conceptIds,
                 courseId,
                 lessonId,
                 correct,

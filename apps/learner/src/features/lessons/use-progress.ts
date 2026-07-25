@@ -22,6 +22,8 @@ export type AttemptSubmission = {
   courseId: string;
   lessonId: string;
   exerciseType: string;
+  /** The exercise's concept tags; this is what feeds mastery. */
+  conceptIds: string[];
   correct: boolean;
 };
 
@@ -54,6 +56,7 @@ export function useSubmitAttempt() {
           courseId: attempt.courseId,
           lessonId: attempt.lessonId,
           exerciseType: attempt.exerciseType,
+          conceptIds: attempt.conceptIds,
           correct: attempt.correct,
           clientCreatedAt: new Date().toISOString(),
         },
@@ -70,7 +73,35 @@ export function useSubmitAttempt() {
         queryKey: ["progress", attempt.courseId],
       });
       void queryClient.invalidateQueries({ queryKey: ["review-queue"] });
+      void queryClient.invalidateQueries({
+        queryKey: ["mastery", attempt.courseId],
+      });
     },
+  });
+}
+
+/** Mirrors the API's CourseMasteryResponse; concepts arrive weakest first. */
+export type CourseMastery = {
+  courseId: string;
+  concepts: Array<{
+    conceptId: string;
+    attempts: number;
+    recentAccuracy: number;
+    masteryScore: number;
+    lastAttemptAt: string;
+  }>;
+};
+
+export function useCourseMastery(courseId: string | undefined) {
+  const { session } = useSession();
+  return useQuery({
+    queryKey: ["mastery", courseId, session?.user.id],
+    enabled: Boolean(courseId) && Boolean(session),
+    queryFn: () =>
+      apiGet<CourseMastery>(
+        `/v1/courses/${courseId}/mastery`,
+        session!.access_token,
+      ),
   });
 }
 

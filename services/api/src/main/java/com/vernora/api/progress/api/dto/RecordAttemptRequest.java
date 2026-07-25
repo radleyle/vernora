@@ -3,6 +3,7 @@ package com.vernora.api.progress.api.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -17,5 +18,7 @@ public record RecordAttemptRequest(
         @NotBlank String courseId,
         @NotBlank String lessonId,
         @NotBlank String exerciseType,
+        /** Concept tags from the exercise; empty is allowed (untagged content). */
+        @NotNull List<String> conceptIds,
         @NotNull Boolean correct,
         @NotNull Instant clientCreatedAt) {}
