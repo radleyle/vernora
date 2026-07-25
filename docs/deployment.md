@@ -68,37 +68,36 @@ The Supabase project used for auth includes a full Postgres database.
 
 ## 3. Web app: Vercel
 
-1. Build the static bundle with the production API URL baked in
-   (`EXPO_PUBLIC_*` variables are inlined at build time, not read at runtime):
+One script does everything (export with the API URL baked in, assemble the
+Vercel Build Output API structure, deploy):
 
-   ```bash
-   cd apps/learner
-   EXPO_PUBLIC_API_URL=https://<service>.onrender.com npx expo export --platform web
-   ```
+```bash
+EXPO_PUBLIC_API_URL=https://vernora.onrender.com \
+  ./infrastructure/scripts/deploy-web.sh
+```
 
-   The export includes `vercel.json` (copied from `public/`), which rewrites
-   every path to the SPA shell so deep links like
-   `/course/korean-core/lesson/...` survive a hard refresh.
+First run requires `npx vercel login`. Then:
 
-2. Deploy the prebuilt output directly with the Vercel CLI — we build
-   locally (the env var above must be baked in), so Vercel only hosts files:
-
-   ```bash
-   cd dist
-   npx vercel --prod
-   ```
-
-   Follow the prompts (log in, create a new project). Subsequent deploys
-   are the same two commands: export, then `npx vercel --prod`.
-3. Take the resulting `https://<project>.vercel.app` URL and set it as
-   `CORS_ALLOWED_ORIGINS` on the Render service (then redeploy the API).
-4. Supabase dashboard → Authentication → URL Configuration: add the Vercel
+1. Take the resulting `https://<project>.vercel.app` URL and set it as
+   `CORS_ALLOWED_ORIGINS` on the Render service (Render restarts the API
+   automatically when the variable is saved).
+2. Supabase dashboard → Authentication → URL Configuration: add the Vercel
    URL to the allowed redirect URLs so auth emails link back correctly.
 
-Note: don't link Vercel to the git repo for this app. Vercel's repo builds
-would need monorepo build settings and wouldn't know `EXPO_PUBLIC_API_URL`;
-building locally and shipping `dist` keeps one source of truth for the
-production bundle.
+Why the script instead of plain `vercel --prod` (hard-won lessons):
+
+- The Vercel CLI decides the "project root" by walking up from the current
+  directory to the nearest `package.json`. From `dist` (which has none) it
+  silently anchored to `apps/learner` and deployed the *source* — whose only
+  servable content was `public/`, yielding a one-file website. The script
+  writes a stub `package.json` into `dist` to pin the root.
+- Vercel's remote build inference produced empty output for a prebuilt Expo
+  export ("no files were prepared"). Using the Build Output API
+  (`.vercel/output` + `--prebuilt`) skips inference entirely: Vercel hosts
+  exactly the files we hand it, with an SPA rewrite in `config.json`.
+- Don't link Vercel to the git repo for this app: repo builds would need
+  monorepo settings and wouldn't know `EXPO_PUBLIC_API_URL`. Building
+  locally keeps one source of truth for the production bundle.
 
 ## Known free-tier behavior
 
