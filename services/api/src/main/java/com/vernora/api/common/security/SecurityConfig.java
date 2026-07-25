@@ -28,6 +28,10 @@ public class SecurityConfig {
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        // Matchers are evaluated top-down, first match wins.
+                        // Progress lives under /v1/courses/** so it must be
+                        // claimed BEFORE the catalog's public wildcard below.
+                        .requestMatchers(HttpMethod.GET, "/v1/courses/*/progress").authenticated()
                         // Browsing the course catalog requires no account.
                         .requestMatchers(HttpMethod.GET, "/v1/courses/**").permitAll()
                         .requestMatchers("/actuator/health").permitAll()

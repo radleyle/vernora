@@ -1,10 +1,16 @@
 import { Link, Stack, useLocalSearchParams } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useCourse } from "../../../features/lessons/use-course";
+import {
+  isLessonComplete,
+  useCourseProgress,
+} from "../../../features/lessons/use-progress";
 
 export default function CourseOutlineScreen() {
   const { courseId } = useLocalSearchParams<{ courseId: string }>();
   const course = useCourse(courseId);
+  // Only fetched when signed in; guests simply never see checkmarks.
+  const progress = useCourseProgress(courseId);
 
   return (
     <ScrollView style={styles.container}>
@@ -23,18 +29,28 @@ export default function CourseOutlineScreen() {
                 <View key={scenario.id} style={styles.scenario}>
                   <Text style={styles.scenarioTitle}>{scenario.title.en}</Text>
                   <Text style={styles.muted}>{scenario.objective.en}</Text>
-                  {scenario.lessons.map((lesson) => (
-                    <Link
-                      key={lesson.id}
-                      href={`/course/${courseId}/lesson/${lesson.id}`}
-                      style={styles.lessonLink}
-                    >
-                      <View style={styles.lessonCard}>
-                        <Text style={styles.lessonTitle}>{lesson.title.en}</Text>
-                        <Text style={styles.muted}>{lesson.objective.en}</Text>
-                      </View>
-                    </Link>
-                  ))}
+                  {scenario.lessons.map((lesson) => {
+                    const complete = isLessonComplete(
+                      progress.data,
+                      lesson.id,
+                      lesson.exercises.map((exercise) => exercise.id),
+                    );
+                    return (
+                      <Link
+                        key={lesson.id}
+                        href={`/course/${courseId}/lesson/${lesson.id}`}
+                        style={styles.lessonLink}
+                      >
+                        <View style={styles.lessonCard}>
+                          <Text style={styles.lessonTitle}>
+                            {complete ? "✅ " : ""}
+                            {lesson.title.en}
+                          </Text>
+                          <Text style={styles.muted}>{lesson.objective.en}</Text>
+                        </View>
+                      </Link>
+                    );
+                  })}
                 </View>
               ))}
             </View>

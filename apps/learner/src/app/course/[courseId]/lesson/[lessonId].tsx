@@ -10,6 +10,7 @@ import {
   VocabularyCard,
 } from "../../../../features/lessons/step-cards";
 import { useCourse } from "../../../../features/lessons/use-course";
+import { useSubmitAttempt } from "../../../../features/lessons/use-progress";
 
 function findLesson(course: Course, lessonId: string): Lesson | undefined {
   for (const level of course.levels)
@@ -26,6 +27,7 @@ export default function LessonPlayerScreen() {
     lessonId: string;
   }>();
   const course = useCourse(courseId);
+  const submitAttempt = useSubmitAttempt();
 
   const [stepIndex, setStepIndex] = useState(0);
   // Exercise results keyed by exercise id; null = current one not finished.
@@ -84,6 +86,17 @@ export default function LessonPlayerScreen() {
             onComplete={(correct) => {
               setResults((current) => ({ ...current, [exercise.id]: correct }));
               setStepDone(true);
+              // Fire-and-forget: grading already happened locally, so a
+              // failed submission never blocks the learner. The UUID minted
+              // here is the idempotency key the server dedupes on.
+              submitAttempt.mutate({
+                attemptId: crypto.randomUUID(),
+                exerciseId: exercise.id,
+                exerciseType: exercise.type,
+                courseId,
+                lessonId,
+                correct,
+              });
             }}
           />
         );
