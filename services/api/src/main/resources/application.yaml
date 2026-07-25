@@ -1,3 +1,8 @@
+# PaaS platforms (Render, Cloud Run, ...) tell the app which port to bind
+# via the PORT environment variable. Locally it stays 8080.
+server:
+  port: ${PORT:8080}
+
 spring:
   application:
     name: vernora-api

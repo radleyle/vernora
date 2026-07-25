@@ -42,6 +42,12 @@ async function main(): Promise<void> {
     database: process.env.DB_NAME ?? "vernora",
     user: process.env.DB_USER ?? "vernora",
     password: process.env.DB_PASSWORD ?? "vernora",
+    // Managed providers (Supabase, Neon, ...) require TLS; local Docker
+    // Postgres does not speak it. Opt in with DB_SSL=require.
+    ssl:
+      process.env.DB_SSL === "require"
+        ? { rejectUnauthorized: false }
+        : undefined,
   });
   await client.connect();
   try {
