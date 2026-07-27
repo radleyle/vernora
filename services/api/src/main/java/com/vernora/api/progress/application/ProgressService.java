@@ -5,8 +5,11 @@ import com.vernora.api.progress.api.dto.CourseMasteryResponse.ConceptMasteryDto;
 import com.vernora.api.progress.api.dto.CourseProgressResponse;
 import com.vernora.api.progress.api.dto.CourseProgressResponse.ExerciseProgress;
 import com.vernora.api.progress.api.dto.CourseProgressResponse.LessonProgress;
+import com.vernora.api.progress.api.dto.RecommendationsResponse;
+import com.vernora.api.progress.api.dto.RecommendationsResponse.RecommendedConcept;
 import com.vernora.api.progress.api.dto.RecordAttemptRequest;
 import com.vernora.api.progress.domain.MasteryCalculator;
+import com.vernora.api.progress.domain.RecommendationEngine;
 import com.vernora.api.progress.infrastructure.ConceptAttemptReader;
 import com.vernora.api.progress.infrastructure.ExerciseAttemptEntity;
 import com.vernora.api.progress.infrastructure.ExerciseAttemptRepository;
@@ -77,7 +80,7 @@ public class ProgressService {
 
     @Transactional(readOnly = true)
     public CourseMasteryResponse getCourseMastery(UUID userId, String courseId) {
-        var mastery = MasteryCalculator.calculate(conceptAttempts.readHistory(userId, courseId));
+        var mastery = computeMastery(userId, courseId);
         var concepts =
                 mastery.stream()
                         .map(m ->
@@ -89,6 +92,23 @@ public class ProgressService {
                                         m.lastAttemptAt()))
                         .toList();
         return new CourseMasteryResponse(courseId, concepts);
+    }
+
+    @Transactional(readOnly = true)
+    public RecommendationsResponse getRecommendations(UUID userId, String courseId) {
+        var recommended = RecommendationEngine.recommend(computeMastery(userId, courseId));
+        var concepts =
+                recommended.stream()
+                        .map(m ->
+                                new RecommendedConcept(
+                                        m.conceptId(), m.masteryScore(), m.attempts(), m.lastAttemptAt()))
+                        .toList();
+        return new RecommendationsResponse(courseId, concepts);
+    }
+
+    /** Shared by mastery and recommendations: both start from the same derived scores. */
+    private List<MasteryCalculator.ConceptMastery> computeMastery(UUID userId, String courseId) {
+        return MasteryCalculator.calculate(conceptAttempts.readHistory(userId, courseId));
     }
 
     @Transactional(readOnly = true)

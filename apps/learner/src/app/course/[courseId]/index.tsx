@@ -5,6 +5,7 @@ import {
   isLessonComplete,
   useCourseMastery,
   useCourseProgress,
+  useRecommendations,
 } from "../../../features/lessons/use-progress";
 
 export default function CourseOutlineScreen() {
@@ -13,10 +14,19 @@ export default function CourseOutlineScreen() {
   // Only fetched when signed in; guests simply never see checkmarks.
   const progress = useCourseProgress(courseId);
   const mastery = useCourseMastery(courseId);
+  const recommendations = useRecommendations(courseId);
 
   // Join mastery rows (weakest first) to concept titles from the content.
   const masteryRows =
     mastery.data?.concepts.flatMap((row) => {
+      const concept = course.data?.concepts.find(
+        (candidate) => candidate.id === row.conceptId,
+      );
+      return concept ? [{ ...row, title: concept.name.en }] : [];
+    }) ?? [];
+
+  const recommendedConcepts =
+    recommendations.data?.concepts.flatMap((row) => {
       const concept = course.data?.concepts.find(
         (candidate) => candidate.id === row.conceptId,
       );
@@ -29,6 +39,30 @@ export default function CourseOutlineScreen() {
       {course.isPending && <Text style={styles.muted}>Loading course…</Text>}
       {course.isError && (
         <Text style={styles.error}>Could not load this course.</Text>
+      )}
+      {recommendedConcepts.length > 0 && (
+        <View style={styles.recommendCard}>
+          <Text style={styles.recommendHeading}>Needs review</Text>
+          {recommendedConcepts.map((row) => (
+            <View key={row.conceptId} style={styles.recommendRow}>
+              <View style={styles.recommendLabel}>
+                <Text style={styles.recommendTitle}>{row.title}</Text>
+                <Text style={styles.recommendMeta}>
+                  mastery {row.masteryScore} · {row.attempts} attempts
+                </Text>
+              </View>
+              <Link
+                href={{
+                  pathname: "/practice",
+                  params: { courseId, conceptId: row.conceptId },
+                }}
+                style={styles.recommendButton}
+              >
+                Practice
+              </Link>
+            </View>
+          ))}
+        </View>
       )}
       {masteryRows.length > 0 && (
         <View style={styles.masteryCard}>
@@ -148,4 +182,37 @@ const styles = StyleSheet.create({
   },
   masteryFillWeak: { backgroundColor: "#f59e0b" },
   masteryHint: { color: "#6b7280", fontSize: 12, marginTop: 6 },
+  recommendCard: {
+    backgroundColor: "#fff7ed",
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: "#fed7aa",
+  },
+  recommendHeading: {
+    fontSize: 17,
+    fontWeight: "700",
+    marginBottom: 10,
+    color: "#9a3412",
+  },
+  recommendRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  recommendLabel: { flex: 1, marginRight: 12 },
+  recommendTitle: { fontSize: 14, fontWeight: "600", color: "#111827" },
+  recommendMeta: { fontSize: 12, color: "#78716c" },
+  recommendButton: {
+    color: "#ffffff",
+    backgroundColor: "#f97316",
+    fontWeight: "700",
+    fontSize: 13,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 8,
+    overflow: "hidden",
+  },
 });

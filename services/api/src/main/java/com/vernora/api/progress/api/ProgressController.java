@@ -2,6 +2,7 @@ package com.vernora.api.progress.api;
 
 import com.vernora.api.progress.api.dto.CourseMasteryResponse;
 import com.vernora.api.progress.api.dto.CourseProgressResponse;
+import com.vernora.api.progress.api.dto.RecommendationsResponse;
 import com.vernora.api.progress.application.ProgressService;
 import java.util.UUID;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,5 +34,13 @@ public class ProgressController {
             @PathVariable String courseId, @AuthenticationPrincipal Jwt jwt) {
         var userId = UUID.fromString(jwt.getSubject());
         return progressService.getCourseMastery(userId, courseId);
+    }
+
+    /** Concepts worth deliberate review, weakest first (spec Epic 5). */
+    @GetMapping("/v1/courses/{courseId}/recommendations")
+    public RecommendationsResponse getRecommendations(
+            @PathVariable String courseId, @AuthenticationPrincipal Jwt jwt) {
+        var userId = UUID.fromString(jwt.getSubject());
+        return progressService.getRecommendations(userId, courseId);
     }
 }

@@ -33,6 +33,7 @@ public class SecurityConfig {
                         // claimed BEFORE the catalog's public wildcard below.
                         .requestMatchers(HttpMethod.GET, "/v1/courses/*/progress").authenticated()
                         .requestMatchers(HttpMethod.GET, "/v1/courses/*/mastery").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/v1/courses/*/recommendations").authenticated()
                         // Browsing the course catalog requires no account.
                         .requestMatchers(HttpMethod.GET, "/v1/courses/**").permitAll()
                         .requestMatchers("/actuator/health").permitAll()

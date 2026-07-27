@@ -76,6 +76,9 @@ export function useSubmitAttempt() {
       void queryClient.invalidateQueries({
         queryKey: ["mastery", attempt.courseId],
       });
+      void queryClient.invalidateQueries({
+        queryKey: ["recommendations", attempt.courseId],
+      });
     },
   });
 }
@@ -100,6 +103,30 @@ export function useCourseMastery(courseId: string | undefined) {
     queryFn: () =>
       apiGet<CourseMastery>(
         `/v1/courses/${courseId}/mastery`,
+        session!.access_token,
+      ),
+  });
+}
+
+/** Mirrors the API's RecommendationsResponse; weakest-first, capped at 5. */
+export type Recommendations = {
+  courseId: string;
+  concepts: Array<{
+    conceptId: string;
+    masteryScore: number;
+    attempts: number;
+    lastAttemptAt: string;
+  }>;
+};
+
+export function useRecommendations(courseId: string | undefined) {
+  const { session } = useSession();
+  return useQuery({
+    queryKey: ["recommendations", courseId, session?.user.id],
+    enabled: Boolean(courseId) && Boolean(session),
+    queryFn: () =>
+      apiGet<Recommendations>(
+        `/v1/courses/${courseId}/recommendations`,
         session!.access_token,
       ),
   });

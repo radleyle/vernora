@@ -150,6 +150,40 @@ class ProgressApiIntegrationTest {
     }
 
     @Test
+    void recommendationsSurfaceOnlyConceptsBelowTheThreshold() throws Exception {
+        // "shaky": weighted accuracy 1/3 (recognition + a production miss),
+        // confidence 2/5 -> weightedAccuracy(1/3) * confidence(0.4) * 100 = 13.
+        mockMvc.perform(postAttempt("ex-1", attemptConceptJson(
+                        "11111111-0000-4000-8000-00000000000d", "shaky", "LISTEN_AND_SELECT", true),
+                        asUser(USER)))
+                .andExpect(status().isCreated());
+        mockMvc.perform(postAttempt("ex-2", attemptConceptJson(
+                        "11111111-0000-4000-8000-00000000000e", "shaky", "TRANSLATE_TO_KOREAN", false),
+                        asUser(USER)))
+                .andExpect(status().isCreated());
+        // "solid": 5 correct recognition answers -> score 100. Not recommended.
+        for (int i = 0; i < 5; i++) {
+            mockMvc.perform(postAttempt("ex-solid", attemptConceptJson(
+                            "22222222-0000-4000-8000-00000000000" + i, "solid",
+                            "LISTEN_AND_SELECT", true),
+                            asUser(USER)))
+                    .andExpect(status().isCreated());
+        }
+
+        mockMvc.perform(get("/v1/courses/korean-core/recommendations").with(asUser(USER)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.concepts.length()").value(1))
+                .andExpect(jsonPath("$.concepts[0].conceptId").value("shaky"))
+                .andExpect(jsonPath("$.concepts[0].masteryScore").value(13));
+    }
+
+    @Test
+    void recommendationsRequireAuthentication() throws Exception {
+        mockMvc.perform(get("/v1/courses/korean-core/recommendations"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
     void attemptsRequireAuthentication() throws Exception {
         mockMvc.perform(post("/v1/exercises/ex-greet-1/attempts")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -188,16 +222,21 @@ class ProgressApiIntegrationTest {
     }
 
     private String attemptJson(String attemptId, String exerciseType, boolean correct) {
+        return attemptConceptJson(attemptId, "greet-politely", exerciseType, correct);
+    }
+
+    private String attemptConceptJson(
+            String attemptId, String conceptId, String exerciseType, boolean correct) {
         return """
                 {
                   "attemptId": "%s",
                   "courseId": "korean-core",
                   "lessonId": "lesson-greetings",
                   "exerciseType": "%s",
-                  "conceptIds": ["greet-politely"],
+                  "conceptIds": ["%s"],
                   "correct": %s,
                   "clientCreatedAt": "2026-07-24T12:00:00Z"
                 }
-                """.formatted(attemptId, exerciseType, correct);
+                """.formatted(attemptId, exerciseType, conceptId, correct);
     }
 }

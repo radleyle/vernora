@@ -1,8 +1,8 @@
-import type { Course, Exercise } from "@vernora/content-schema";
 import { Link, Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Card, PrimaryButton } from "../components/ui";
+import { findExercise } from "../features/lessons/course-lookup";
 import { ExerciseHost } from "../features/lessons/exercise-host";
 import { useCourse } from "../features/lessons/use-course";
 import { useSubmitAttempt } from "../features/lessons/use-progress";
@@ -11,20 +11,6 @@ import {
   type ReviewQueueItem,
 } from "../features/lessons/use-review";
 import { useSession } from "../providers/session-provider";
-
-function findExercise(
-  course: Course,
-  lessonId: string,
-  exerciseId: string,
-): Exercise | undefined {
-  for (const level of course.levels)
-    for (const unit of level.units)
-      for (const scenario of unit.scenarios)
-        for (const lesson of scenario.lessons)
-          if (lesson.id === lessonId)
-            return lesson.exercises.find((e) => e.id === exerciseId);
-  return undefined;
-}
 
 export default function ReviewScreen() {
   const { session } = useSession();
