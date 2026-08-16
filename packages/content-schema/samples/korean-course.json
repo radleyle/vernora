@@ -1,10 +1,64 @@
 {
   "id": "korean-core",
-  "version": 1,
+  "version": 2,
   "language": "ko",
   "explanationLanguages": ["en", "vi"],
   "title": { "en": "Korean", "vi": "Tiếng Hàn" },
   "concepts": [
+    {
+      "id": "hangul-vowels",
+      "name": { "en": "Hangul vowels", "vi": "Nguyên âm Hangul" },
+      "explanation": {
+        "en": "Korean vowels are written as their own letters. The six basic ones are ㅏ (a), ㅓ (eo), ㅗ (o), ㅜ (u), ㅡ (eu), and ㅣ (i). ㅐ (ae) and ㅔ (e) are also common. To say a vowel by itself, write it with ㅇ, which is silent at the start of a syllable: 아, 어, 오.",
+        "vi": "Nguyên âm tiếng Hàn là chữ riêng. Sáu nguyên âm cơ bản: ㅏ (a), ㅓ (eo), ㅗ (o), ㅜ (u), ㅡ (eu), ㅣ (i). ㅐ (ae) và ㅔ (e) cũng thường gặp. Để đọc một nguyên âm đơn, viết cùng ㅇ (câm ở đầu âm tiết): 아, 어, 오."
+      },
+      "examples": [
+        {
+          "korean": "아",
+          "meaning": { "en": "the vowel ㅏ said aloud" }
+        },
+        {
+          "korean": "오",
+          "meaning": { "en": "the vowel ㅗ said aloud" }
+        }
+      ]
+    },
+    {
+      "id": "hangul-consonants",
+      "name": { "en": "Hangul consonants", "vi": "Phụ âm Hangul" },
+      "explanation": {
+        "en": "These ten consonants cover most beginner words: ㄱ ㄴ ㄷ ㄹ ㅁ ㅂ ㅅ ㅇ ㅈ ㅎ. ㅇ is silent at the start of a syllable (so 아 is just 'a') and sounds like ng at the end (방 is bang).",
+        "vi": "Mười phụ âm này đủ cho hầu hết từ sơ cấp: ㄱ ㄴ ㄷ ㄹ ㅁ ㅂ ㅅ ㅇ ㅈ ㅎ. ㅇ câm ở đầu âm tiết (아 chỉ là 'a') và đọc ng ở cuối (방 là bang)."
+      },
+      "examples": [
+        {
+          "korean": "가",
+          "meaning": { "en": "ㄱ + ㅏ = ga" }
+        },
+        {
+          "korean": "나",
+          "meaning": { "en": "ㄴ + ㅏ = na" }
+        }
+      ]
+    },
+    {
+      "id": "syllable-blocks",
+      "name": { "en": "Syllable blocks", "vi": "Khối âm tiết" },
+      "explanation": {
+        "en": "Korean is written in syllable blocks, not as a line of separate letters. A simple block is consonant + vowel, packed into a square: ㄱ + ㅏ = 가. Read left-to-right, then top-to-bottom inside the block.",
+        "vi": "Tiếng Hàn viết theo khối âm tiết, không phải từng chữ nối hàng. Khối đơn giản là phụ âm + nguyên âm trong một ô vuông: ㄱ + ㅏ = 가. Đọc trái sang phải, rồi trên xuống dưới trong khối."
+      },
+      "examples": [
+        {
+          "korean": "가",
+          "meaning": { "en": "ga (ㄱ + ㅏ)" }
+        },
+        {
+          "korean": "가다",
+          "meaning": { "en": "to go — two blocks: 가 + 다" }
+        }
+      ]
+    },
     {
       "id": "greeting-people",
       "name": { "en": "Greeting people", "vi": "Chào hỏi" },
@@ -38,6 +92,153 @@
     }
   ],
   "vocabulary": [
+    {
+      "id": "vowel-a",
+      "korean": "ㅏ",
+      "romanization": "a",
+      "meaning": { "en": "a (as in father)", "vi": "a (như trong cha)" }
+    },
+    {
+      "id": "vowel-eo",
+      "korean": "ㅓ",
+      "romanization": "eo",
+      "meaning": { "en": "eo (as in bought)", "vi": "eo (âm mở)" }
+    },
+    {
+      "id": "vowel-o",
+      "korean": "ㅗ",
+      "romanization": "o",
+      "meaning": { "en": "o (as in go)", "vi": "o" }
+    },
+    {
+      "id": "vowel-u",
+      "korean": "ㅜ",
+      "romanization": "u",
+      "meaning": { "en": "u (as in moon)", "vi": "u" }
+    },
+    {
+      "id": "vowel-eu",
+      "korean": "ㅡ",
+      "romanization": "eu",
+      "meaning": { "en": "eu (unrounded, like a grunt)", "vi": "eu (không tròn môi)" }
+    },
+    {
+      "id": "vowel-i",
+      "korean": "ㅣ",
+      "romanization": "i",
+      "meaning": { "en": "i (as in see)", "vi": "i" }
+    },
+    {
+      "id": "vowel-ae",
+      "korean": "ㅐ",
+      "romanization": "ae",
+      "meaning": { "en": "ae (as in bed)", "vi": "ae" }
+    },
+    {
+      "id": "vowel-e",
+      "korean": "ㅔ",
+      "romanization": "e",
+      "meaning": { "en": "e (as in bed, close to ㅐ)", "vi": "e (gần với ㅐ)" }
+    },
+    {
+      "id": "consonant-g",
+      "korean": "ㄱ",
+      "romanization": "g/k",
+      "meaning": { "en": "g (softer at the start of a word)", "vi": "g/k" }
+    },
+    {
+      "id": "consonant-n",
+      "korean": "ㄴ",
+      "romanization": "n",
+      "meaning": { "en": "n", "vi": "n" }
+    },
+    {
+      "id": "consonant-d",
+      "korean": "ㄷ",
+      "romanization": "d/t",
+      "meaning": { "en": "d", "vi": "d/t" }
+    },
+    {
+      "id": "consonant-r",
+      "korean": "ㄹ",
+      "romanization": "r/l",
+      "meaning": { "en": "r or l, depending on position", "vi": "r/l" }
+    },
+    {
+      "id": "consonant-m",
+      "korean": "ㅁ",
+      "romanization": "m",
+      "meaning": { "en": "m", "vi": "m" }
+    },
+    {
+      "id": "consonant-b",
+      "korean": "ㅂ",
+      "romanization": "b/p",
+      "meaning": { "en": "b", "vi": "b/p" }
+    },
+    {
+      "id": "consonant-s",
+      "korean": "ㅅ",
+      "romanization": "s",
+      "meaning": { "en": "s", "vi": "s" }
+    },
+    {
+      "id": "consonant-ieung",
+      "korean": "ㅇ",
+      "romanization": "-/ng",
+      "meaning": {
+        "en": "silent at the start of a syllable; ng at the end",
+        "vi": "câm ở đầu; ng ở cuối"
+      }
+    },
+    {
+      "id": "consonant-j",
+      "korean": "ㅈ",
+      "romanization": "j",
+      "meaning": { "en": "j", "vi": "j" }
+    },
+    {
+      "id": "consonant-h",
+      "korean": "ㅎ",
+      "romanization": "h",
+      "meaning": { "en": "h", "vi": "h" }
+    },
+    {
+      "id": "syllable-ga",
+      "korean": "가",
+      "romanization": "ga",
+      "meaning": { "en": "ga (as in 가다, to go)", "vi": "ga" }
+    },
+    {
+      "id": "syllable-na",
+      "korean": "나",
+      "romanization": "na",
+      "meaning": { "en": "na (I / me, casual)", "vi": "na" }
+    },
+    {
+      "id": "syllable-da",
+      "korean": "다",
+      "romanization": "da",
+      "meaning": { "en": "da (verb ending in 가다)", "vi": "da" }
+    },
+    {
+      "id": "syllable-ma",
+      "korean": "마",
+      "romanization": "ma",
+      "meaning": { "en": "ma", "vi": "ma" }
+    },
+    {
+      "id": "syllable-ba",
+      "korean": "바",
+      "romanization": "ba",
+      "meaning": { "en": "ba", "vi": "ba" }
+    },
+    {
+      "id": "syllable-sa",
+      "korean": "사",
+      "romanization": "sa",
+      "meaning": { "en": "sa", "vi": "sa" }
+    },
     {
       "id": "annyeonghaseyo",
       "korean": "안녕하세요",
@@ -87,6 +288,353 @@
       "id": "ko-a0",
       "code": "A0",
       "units": [
+        {
+          "id": "hangul-foundations",
+          "title": { "en": "Hangul Foundations", "vi": "Nền tảng Hangul" },
+          "scenarios": [
+            {
+              "id": "reading-korean",
+              "title": { "en": "Reading Korean" },
+              "objective": {
+                "en": "Read basic Hangul vowels, consonants, and simple syllable blocks."
+              },
+              "lessons": [
+                {
+                  "id": "basic-vowels",
+                  "title": { "en": "Basic vowels" },
+                  "objective": {
+                    "en": "Recognize and say the basic Hangul vowels."
+                  },
+                  "steps": [
+                    {
+                      "type": "SITUATION",
+                      "text": {
+                        "en": "Before you can greet anyone, you need to read the letters. Hangul is an alphabet: each shape is a sound you can learn in an afternoon."
+                      }
+                    },
+                    {
+                      "type": "VOCABULARY",
+                      "vocabularyIds": [
+                        "vowel-a",
+                        "vowel-eo",
+                        "vowel-o",
+                        "vowel-u",
+                        "vowel-eu",
+                        "vowel-i",
+                        "vowel-ae",
+                        "vowel-e"
+                      ]
+                    },
+                    { "type": "CONCEPT", "conceptId": "hangul-vowels" },
+                    { "type": "EXERCISE", "exerciseId": "match-vowels" },
+                    { "type": "EXERCISE", "exerciseId": "listen-vowel-a" },
+                    { "type": "EXERCISE", "exerciseId": "listen-vowel-o" },
+                    { "type": "EXERCISE", "exerciseId": "fill-vowel-ah" },
+                    { "type": "EXERCISE", "exerciseId": "arrange-ah" },
+                    { "type": "EXERCISE", "exerciseId": "speak-ah" }
+                  ],
+                  "exercises": [
+                    {
+                      "id": "match-vowels",
+                      "type": "MATCH_PAIRS",
+                      "conceptIds": ["hangul-vowels"],
+                      "instruction": {
+                        "en": "Match each vowel to its romanization."
+                      },
+                      "pairs": [
+                        { "korean": "ㅏ", "meaning": { "en": "a" } },
+                        { "korean": "ㅓ", "meaning": { "en": "eo" } },
+                        { "korean": "ㅗ", "meaning": { "en": "o" } },
+                        { "korean": "ㅣ", "meaning": { "en": "i" } }
+                      ]
+                    },
+                    {
+                      "id": "listen-vowel-a",
+                      "type": "LISTEN_AND_SELECT",
+                      "conceptIds": ["hangul-vowels"],
+                      "instruction": {
+                        "en": "Listen and choose the vowel you heard."
+                      },
+                      "audioText": "아",
+                      "options": [
+                        { "korean": "ㅏ", "meaning": { "en": "a" } },
+                        { "korean": "ㅓ", "meaning": { "en": "eo" } },
+                        { "korean": "ㅗ", "meaning": { "en": "o" } }
+                      ],
+                      "correctIndex": 0
+                    },
+                    {
+                      "id": "listen-vowel-o",
+                      "type": "LISTEN_AND_SELECT",
+                      "conceptIds": ["hangul-vowels"],
+                      "instruction": {
+                        "en": "Listen and choose the vowel you heard."
+                      },
+                      "audioText": "오",
+                      "options": [
+                        { "korean": "ㅜ", "meaning": { "en": "u" } },
+                        { "korean": "ㅗ", "meaning": { "en": "o" } },
+                        { "korean": "ㅏ", "meaning": { "en": "a" } }
+                      ],
+                      "correctIndex": 1
+                    },
+                    {
+                      "id": "fill-vowel-ah",
+                      "type": "FILL_BLANK",
+                      "conceptIds": ["hangul-vowels"],
+                      "instruction": {
+                        "en": "Which vowel completes this spoken syllable?"
+                      },
+                      "sentence": "ㅇ___",
+                      "acceptedAnswers": ["ㅏ"],
+                      "translation": { "en": "아 (a)" }
+                    },
+                    {
+                      "id": "arrange-ah",
+                      "type": "ARRANGE_TOKENS",
+                      "conceptIds": ["hangul-vowels"],
+                      "instruction": {
+                        "en": "Build the spoken syllable for the vowel ㅏ."
+                      },
+                      "tokens": ["ㅇ", "ㅏ"],
+                      "distractors": ["ㅓ"],
+                      "translation": { "en": "아 (a)" }
+                    },
+                    {
+                      "id": "speak-ah",
+                      "type": "SPEAK",
+                      "conceptIds": ["hangul-vowels"],
+                      "instruction": {
+                        "en": "Say the vowel ㅏ out loud."
+                      },
+                      "targetText": "아",
+                      "translation": { "en": "a (as in father)" }
+                    }
+                  ]
+                },
+                {
+                  "id": "basic-consonants",
+                  "title": { "en": "Basic consonants" },
+                  "objective": {
+                    "en": "Recognize the ten most common Hangul consonants."
+                  },
+                  "steps": [
+                    {
+                      "type": "SITUATION",
+                      "text": {
+                        "en": "Vowels need a partner. These consonants sit on the left or top of a syllable block and give the syllable its starting sound."
+                      }
+                    },
+                    {
+                      "type": "VOCABULARY",
+                      "vocabularyIds": [
+                        "consonant-g",
+                        "consonant-n",
+                        "consonant-d",
+                        "consonant-r",
+                        "consonant-m",
+                        "consonant-b",
+                        "consonant-s",
+                        "consonant-ieung",
+                        "consonant-j",
+                        "consonant-h"
+                      ]
+                    },
+                    { "type": "CONCEPT", "conceptId": "hangul-consonants" },
+                    { "type": "EXERCISE", "exerciseId": "match-consonants" },
+                    { "type": "EXERCISE", "exerciseId": "listen-consonant-g" },
+                    { "type": "EXERCISE", "exerciseId": "listen-consonant-n" },
+                    { "type": "EXERCISE", "exerciseId": "fill-consonant-g" },
+                    { "type": "EXERCISE", "exerciseId": "translate-ieung" },
+                    { "type": "EXERCISE", "exerciseId": "speak-ga" }
+                  ],
+                  "exercises": [
+                    {
+                      "id": "match-consonants",
+                      "type": "MATCH_PAIRS",
+                      "conceptIds": ["hangul-consonants"],
+                      "instruction": {
+                        "en": "Match each consonant to its romanization."
+                      },
+                      "pairs": [
+                        { "korean": "ㄱ", "meaning": { "en": "g/k" } },
+                        { "korean": "ㄴ", "meaning": { "en": "n" } },
+                        { "korean": "ㅁ", "meaning": { "en": "m" } },
+                        { "korean": "ㅅ", "meaning": { "en": "s" } }
+                      ]
+                    },
+                    {
+                      "id": "listen-consonant-g",
+                      "type": "LISTEN_AND_SELECT",
+                      "conceptIds": ["hangul-consonants"],
+                      "instruction": {
+                        "en": "Listen and choose the starting consonant."
+                      },
+                      "audioText": "가",
+                      "options": [
+                        { "korean": "ㄱ", "meaning": { "en": "g" } },
+                        { "korean": "ㄴ", "meaning": { "en": "n" } },
+                        { "korean": "ㅁ", "meaning": { "en": "m" } }
+                      ],
+                      "correctIndex": 0
+                    },
+                    {
+                      "id": "listen-consonant-n",
+                      "type": "LISTEN_AND_SELECT",
+                      "conceptIds": ["hangul-consonants"],
+                      "instruction": {
+                        "en": "Listen and choose the starting consonant."
+                      },
+                      "audioText": "나",
+                      "options": [
+                        { "korean": "ㄷ", "meaning": { "en": "d" } },
+                        { "korean": "ㄱ", "meaning": { "en": "g" } },
+                        { "korean": "ㄴ", "meaning": { "en": "n" } }
+                      ],
+                      "correctIndex": 2
+                    },
+                    {
+                      "id": "fill-consonant-g",
+                      "type": "FILL_BLANK",
+                      "conceptIds": ["hangul-consonants"],
+                      "instruction": {
+                        "en": "Which consonant starts this syllable?"
+                      },
+                      "sentence": "___ㅏ = 가",
+                      "acceptedAnswers": ["ㄱ"],
+                      "translation": { "en": "가 (ga)" }
+                    },
+                    {
+                      "id": "translate-ieung",
+                      "type": "TRANSLATE_TO_KOREAN",
+                      "conceptIds": ["hangul-consonants"],
+                      "instruction": {
+                        "en": "Type the letter that is silent at the start of a syllable."
+                      },
+                      "prompt": {
+                        "en": "the silent starter (also ng at the end)"
+                      },
+                      "acceptedAnswers": ["ㅇ"]
+                    },
+                    {
+                      "id": "speak-ga",
+                      "type": "SPEAK",
+                      "conceptIds": ["hangul-consonants"],
+                      "instruction": {
+                        "en": "Say 가 out loud."
+                      },
+                      "targetText": "가",
+                      "translation": { "en": "ga" }
+                    }
+                  ]
+                },
+                {
+                  "id": "syllable-blocks",
+                  "title": { "en": "Syllable blocks" },
+                  "objective": {
+                    "en": "Read simple consonant + vowel blocks and the word 가다."
+                  },
+                  "steps": [
+                    {
+                      "type": "SITUATION",
+                      "text": {
+                        "en": "You can now assemble letters into squares. That is how every Korean word is written — including 가다, 'to go'."
+                      }
+                    },
+                    {
+                      "type": "VOCABULARY",
+                      "vocabularyIds": [
+                        "syllable-ga",
+                        "syllable-na",
+                        "syllable-da",
+                        "syllable-ma",
+                        "syllable-ba",
+                        "syllable-sa"
+                      ]
+                    },
+                    { "type": "CONCEPT", "conceptId": "syllable-blocks" },
+                    { "type": "EXERCISE", "exerciseId": "match-syllables" },
+                    { "type": "EXERCISE", "exerciseId": "listen-ma" },
+                    { "type": "EXERCISE", "exerciseId": "fill-gada" },
+                    { "type": "EXERCISE", "exerciseId": "arrange-gada" },
+                    { "type": "EXERCISE", "exerciseId": "translate-ga" },
+                    { "type": "EXERCISE", "exerciseId": "speak-gada" }
+                  ],
+                  "exercises": [
+                    {
+                      "id": "match-syllables",
+                      "type": "MATCH_PAIRS",
+                      "conceptIds": ["syllable-blocks"],
+                      "instruction": {
+                        "en": "Match each syllable to its romanization."
+                      },
+                      "pairs": [
+                        { "korean": "가", "meaning": { "en": "ga" } },
+                        { "korean": "나", "meaning": { "en": "na" } },
+                        { "korean": "다", "meaning": { "en": "da" } }
+                      ]
+                    },
+                    {
+                      "id": "listen-ma",
+                      "type": "LISTEN_AND_SELECT",
+                      "conceptIds": ["syllable-blocks"],
+                      "instruction": {
+                        "en": "Listen and choose the syllable you heard."
+                      },
+                      "audioText": "마",
+                      "options": [
+                        { "korean": "바", "meaning": { "en": "ba" } },
+                        { "korean": "마", "meaning": { "en": "ma" } },
+                        { "korean": "사", "meaning": { "en": "sa" } }
+                      ],
+                      "correctIndex": 1
+                    },
+                    {
+                      "id": "fill-gada",
+                      "type": "FILL_BLANK",
+                      "conceptIds": ["syllable-blocks"],
+                      "instruction": {
+                        "en": "Complete the word 'to go'."
+                      },
+                      "sentence": "가___",
+                      "acceptedAnswers": ["다"],
+                      "translation": { "en": "가다 (to go)" }
+                    },
+                    {
+                      "id": "arrange-gada",
+                      "type": "ARRANGE_TOKENS",
+                      "conceptIds": ["syllable-blocks"],
+                      "instruction": {
+                        "en": "Arrange the blocks to make 'to go'."
+                      },
+                      "tokens": ["가", "다"],
+                      "distractors": ["나"],
+                      "translation": { "en": "to go" }
+                    },
+                    {
+                      "id": "translate-ga",
+                      "type": "TRANSLATE_TO_KOREAN",
+                      "conceptIds": ["syllable-blocks"],
+                      "instruction": { "en": "Type the syllable." },
+                      "prompt": { "en": "ga" },
+                      "acceptedAnswers": ["가"]
+                    },
+                    {
+                      "id": "speak-gada",
+                      "type": "SPEAK",
+                      "conceptIds": ["syllable-blocks"],
+                      "instruction": {
+                        "en": "Say the word for 'to go'."
+                      },
+                      "targetText": "가다",
+                      "translation": { "en": "to go" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
         {
           "id": "first-words",
           "title": { "en": "First Words", "vi": "Những từ đầu tiên" },

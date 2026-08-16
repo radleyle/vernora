@@ -56,8 +56,12 @@ describe("validateCourseReferences (semantic validation)", () => {
 
   it("catches an out-of-range correctIndex", () => {
     const broken = structuredClone(course);
-    const exercise = broken.levels[0]!.units[0]!.scenarios[0]!.lessons[0]!
-      .exercises.find((e) => e.id === "listen-hello");
+    const exercise = broken.levels
+      .flatMap((level) => level.units)
+      .flatMap((unit) => unit.scenarios)
+      .flatMap((scenario) => scenario.lessons)
+      .flatMap((lesson) => lesson.exercises)
+      .find((e) => e.id === "listen-hello");
     if (exercise?.type !== "LISTEN_AND_SELECT") throw new Error("unexpected");
     exercise.correctIndex = 99;
     const errors = validateCourseReferences(broken);
