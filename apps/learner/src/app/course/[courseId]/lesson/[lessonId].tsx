@@ -130,6 +130,19 @@ export default function LessonPlayerScreen() {
       {finished && (
         <Card>
           <Text style={styles.doneTitle}>Lesson complete! 🎉</Text>
+          {lesson.cultureReward ? (
+            <View style={styles.reward}>
+              <Text style={styles.rewardKind}>
+                {lesson.cultureReward.kind.toLowerCase()}
+              </Text>
+              <Text style={styles.rewardTitle}>
+                {lesson.cultureReward.title.en}
+              </Text>
+              <Text style={styles.rewardBody}>
+                {lesson.cultureReward.body.en}
+              </Text>
+            </View>
+          ) : null}
           <Text style={styles.doneBody}>
             You got {correctCount} of {totalExercises} exercises right.
           </Text>
@@ -160,4 +173,20 @@ const styles = StyleSheet.create({
   doneTitle: { fontSize: 22, fontWeight: "700", marginBottom: 8 },
   doneBody: { fontSize: 15, marginBottom: 6 },
   backLink: { color: "#4f46e5", fontWeight: "600", marginTop: 10 },
+  reward: {
+    backgroundColor: "#eef2ff",
+    borderRadius: 10,
+    padding: 12,
+    marginBottom: 12,
+  },
+  rewardKind: {
+    fontSize: 11,
+    fontWeight: "700",
+    color: "#4f46e5",
+    textTransform: "uppercase",
+    letterSpacing: 0.6,
+    marginBottom: 4,
+  },
+  rewardTitle: { fontSize: 17, fontWeight: "700", marginBottom: 6 },
+  rewardBody: { fontSize: 15, lineHeight: 22, color: "#374151" },
 });

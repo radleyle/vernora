@@ -47,6 +47,17 @@ export const LessonStep = z.discriminatedUnion("type", [
   z.object({ type: z.literal("EXERCISE"), exerciseId: ContentId }),
 ]);
 
+/**
+ * A small cultural payoff shown after the lesson is completed (spec 9.7).
+ * Embedded in the lesson rather than fetched from a separate endpoint:
+ * it ships with the course document, works offline, and needs no AI.
+ */
+export const CultureReward = z.object({
+  kind: z.enum(["OBSERVATION", "EXPRESSION", "FACT", "MISUNDERSTANDING"]),
+  title: LocalizedText,
+  body: LocalizedText,
+});
+
 export const Lesson = z.object({
   id: ContentId,
   title: LocalizedText,
@@ -54,6 +65,8 @@ export const Lesson = z.object({
   objective: LocalizedText,
   steps: z.array(LessonStep).min(1),
   exercises: z.array(Exercise),
+  /** Optional so pre-reward course versions keep validating. */
+  cultureReward: CultureReward.optional(),
 });
 
 export const Scenario = z.object({
@@ -101,3 +114,4 @@ export type Scenario = z.infer<typeof Scenario>;
 export type Unit = z.infer<typeof Unit>;
 export type Level = z.infer<typeof Level>;
 export type Course = z.infer<typeof Course>;
+export type CultureReward = z.infer<typeof CultureReward>;

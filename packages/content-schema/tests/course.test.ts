@@ -77,4 +77,26 @@ describe("validateCourseReferences (semantic validation)", () => {
     expect(errors).toHaveLength(1);
     expect(errors[0]).toContain('unknown concept "ghost-concept"');
   });
+
+  it("accepts a lesson without a culture reward (older versions)", () => {
+    const broken = structuredClone(sampleCourse);
+    delete (
+      broken.levels[0]!.units[0]!.scenarios[0]!.lessons[0] as {
+        cultureReward?: unknown;
+      }
+    ).cultureReward;
+    expect(Course.safeParse(broken).success).toBe(true);
+  });
+  
+  it("rejects a culture reward missing its English title", () => {
+    const broken = structuredClone(sampleCourse);
+    (broken.levels[0]!.units[0]!.scenarios[0]!.lessons[0] as {
+      cultureReward?: unknown;
+    }).cultureReward = {
+      kind: "FACT",
+      title: { vi: "chỉ có tiếng Việt" },
+      body: { en: "body text" },
+    };
+    expect(Course.safeParse(broken).success).toBe(false);
+  });
 });

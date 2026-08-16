@@ -1,6 +1,6 @@
 {
   "id": "korean-core",
-  "version": 2,
+  "version": 3,
   "language": "ko",
   "explanationLanguages": ["en", "vi"],
   "title": { "en": "Korean", "vi": "Tiếng Hàn" },
@@ -410,7 +410,18 @@
                       "targetText": "아",
                       "translation": { "en": "a (as in father)" }
                     }
-                  ]
+                  ],
+                  "cultureReward": {
+                    "kind": "FACT",
+                    "title": {
+                      "en": "An alphabet made on purpose",
+                      "vi": "Bảng chữ cái được tạo ra có chủ đích"
+                    },
+                    "body": {
+                      "en": "Hangul was commissioned by King Sejong in 1443 so ordinary people could learn to read. The vowels you just learned are built from three ideas: a dot for heaven, a horizontal line for earth, and a vertical line for a person.",
+                      "vi": "Hangul được vua Sejong ban hành năm 1443 để dân thường có thể học đọc. Các nguyên âm bạn vừa học được ghép từ ba ý tưởng: chấm là trời, nét ngang là đất, nét dọc là người."
+                    }
+                  }
                 },
                 {
                   "id": "basic-consonants",
@@ -526,7 +537,16 @@
                       "targetText": "가",
                       "translation": { "en": "ga" }
                     }
-                  ]
+                  ],
+                  "cultureReward": {
+                    "kind": "OBSERVATION",
+                    "title": {
+                      "en": "Letters shaped like your mouth"
+                    },
+                    "body": {
+                      "en": "The consonants imitate the shape your mouth makes: ㄴ is the tongue touching behind the teeth, ㅁ is closed lips, ㄱ is the tongue blocking the throat. Koreans are taught this in first grade — mention it and you will impress people."
+                    }
+                  }
                 },
                 {
                   "id": "syllable-blocks",
@@ -629,7 +649,16 @@
                       "targetText": "가다",
                       "translation": { "en": "to go" }
                     }
-                  ]
+                  ],
+                  "cultureReward": {
+                    "kind": "EXPRESSION",
+                    "title": {
+                      "en": "가즈아! (gajua!)"
+                    },
+                    "body": {
+                      "en": "You just learned 가다 (to go). Koreans online stretch it into 가즈아!! — roughly \"let's gooo!!\" — shouted when cheering on a game, a stock, or a friend. You can already read the first syllable."
+                    }
+                  }
                 }
               ]
             }
@@ -755,7 +784,16 @@
                       "targetText": "안녕하세요",
                       "translation": { "en": "Hello (polite)" }
                     }
-                  ]
+                  ],
+                  "cultureReward": {
+                    "kind": "MISUNDERSTANDING",
+                    "title": {
+                      "en": "The bow that answers for you"
+                    },
+                    "body": {
+                      "en": "Learners often stress about saying 안녕하세요 perfectly, but Koreans read your bow first. A small nod with your greeting reads as polite even if your pronunciation slips; a flat 안녕 to an elder with no bow reads as rude even if said flawlessly."
+                    }
+                  }
                 }
               ]
             }
