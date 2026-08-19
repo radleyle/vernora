@@ -1,5 +1,5 @@
 import type { Course, Lesson } from "@vernora/content-schema";
-import { Link, Stack, useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Card, PrimaryButton } from "../../../../components/ui";
@@ -27,6 +27,7 @@ export default function LessonPlayerScreen() {
     lessonId: string;
   }>();
   const course = useCourse(courseId);
+  const router = useRouter();
   const submitAttempt = useSubmitAttempt();
 
   const [stepIndex, setStepIndex] = useState(0);
@@ -71,7 +72,11 @@ export default function LessonPlayerScreen() {
         const items = course.data!.vocabulary.filter((item) =>
           step.vocabularyIds.includes(item.id),
         );
-        return <VocabularyCard items={items} />;
+        return <VocabularyCard 
+          items={items}
+          courseId = {courseId}
+          lessonId = {lessonId}
+        />;
       }
       case "EXERCISE": {
         const exercise = lesson!.exercises.find(
@@ -149,9 +154,14 @@ export default function LessonPlayerScreen() {
           <Text style={styles.doneBody}>
             Objective: {lesson.objective.en}
           </Text>
-          <Link href={`/course/${courseId}`} style={styles.backLink}>
-            Back to course
-          </Link>
+          <PrimaryButton
+            label="Back to course"
+            onPress={() => router.replace(`/course/${courseId}`)}
+          />
+          <PrimaryButton
+            label="Home"
+            onPress={() => router.replace("/")}
+          />
         </Card>
       )}
     </ScrollView>
@@ -172,7 +182,6 @@ const styles = StyleSheet.create({
   progressFill: { height: 8, backgroundColor: "#4f46e5" },
   doneTitle: { fontSize: 22, fontWeight: "700", marginBottom: 8 },
   doneBody: { fontSize: 15, marginBottom: 6 },
-  backLink: { color: "#4f46e5", fontWeight: "600", marginTop: 10 },
   reward: {
     backgroundColor: "#eef2ff",
     borderRadius: 10,

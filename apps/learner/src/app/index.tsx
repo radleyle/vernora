@@ -57,19 +57,30 @@ export default function HomeScreen() {
       </View>
 
       {session !== null && (
-        <Pressable
-          style={[styles.reviewCard, dueCount === 0 && styles.reviewCardIdle]}
-          onPress={() => router.push("/review")}
-        >
-          <Text style={styles.reviewTitle}>
-            {dueCount > 0 ? `🧠 Review · ${dueCount} due` : "🧠 Review"}
-          </Text>
-          <Text style={styles.reviewSubtitle}>
-            {dueCount > 0
-              ? "Bring these back before you forget them"
-              : "Nothing due right now — all caught up"}
-          </Text>
-        </Pressable>
+        <>
+          <Pressable
+            style={[styles.reviewCard, dueCount === 0 && styles.reviewCardIdle]}
+            onPress={() => router.push("/review")}
+          >
+            <Text style={styles.reviewTitle}>
+              {dueCount > 0 ? `🧠 Review · ${dueCount} due` : "🧠 Review"}
+            </Text>
+            <Text style={styles.reviewSubtitle}>
+              {dueCount > 0
+                ? "Bring these back before you forget them"
+                : "Nothing due right now — all caught up"}
+            </Text>
+          </Pressable>
+          <Pressable
+            style={[styles.reviewCard, styles.phrasesCard]}
+            onPress={() => router.push("/phrases")}
+          >
+            <Text style={styles.reviewTitle}>Saved phrases</Text>
+            <Text style={styles.reviewSubtitle}>
+              Words you pinned from lessons
+            </Text>
+          </Pressable>
+        </>
       )}
 
       <Text style={styles.heading}>Courses</Text>
@@ -132,4 +143,5 @@ const styles = StyleSheet.create({
   courseTitle: { fontSize: 17, fontWeight: "600", marginBottom: 4 },
   muted: { color: "#6b7280", fontSize: 13 },
   error: { color: "#b91c1c" },
+  phrasesCard: { backgroundColor: "#312e81" },
 });
